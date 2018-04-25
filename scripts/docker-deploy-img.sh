@@ -9,7 +9,6 @@
 cd ${0%/*}
 . ./docker-env-common.sh
 
-FULL_IMAGE_TAG="$DOCKER_CONTAINER_REGISTRY"/"$DOCKER_IMAGE_TAG"
-docker tag "$DOCKER_IMAGE_TAG" "$FULL_IMAGE_TAG"
-docker push "$FULL_IMAGE_TAG"
+docker tag "$DOCKER_IMAGE_TAG" "$REGISTRY_DOCKER_IMAGE_TAG"
+docker push "$REGISTRY_DOCKER_IMAGE_TAG"
 
