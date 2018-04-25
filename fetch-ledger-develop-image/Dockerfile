@@ -57,7 +57,7 @@ RUN bash --login -c "\
     tar -xzvf boost_1_67_0.tar.gz && \
     cd boost_1_67_0 && \
     ./bootstrap.sh --with-toolset=clang --prefix=/usr/local && \
-    NUMBER_OF_CPU_CORES=`getconf _NPROCESSORS_ONLN` && \
+    NUMBER_OF_CPU_CORES=\"\$((2 * `getconf _NPROCESSORS_ONLN`))\" && \
     echo NUMBER_OF_CPU_CORES: \$NUMBER_OF_CPU_CORES && \
     sudo ./b2 -j\$NUMBER_OF_CPU_CORES install --with=all"
 
