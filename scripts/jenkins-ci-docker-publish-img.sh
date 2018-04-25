@@ -1,3 +1,4 @@
+#!/bin/bash
 set-docker-credentails-helpers() {
     local DOCKER_CONFIG_DIR=~/.docker
     mkdir -p "$DOCKER_CONFIG_DIR"
@@ -13,6 +14,6 @@ set-docker-credentails-helpers() {
 }
 
 set-docker-credentails-helpers
-./scripts/docker-deploy-img.sh
+./scripts/docker-publish-img.sh
 ./scripts/docker-delete-img-from-cache.sh
 
