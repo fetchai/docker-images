@@ -5,9 +5,9 @@
 #   # The following example provides the `--cpus 4` parameter to `docker run` command (sets number of available CPUs for docker run) and executes make with `-j http_server` parameters inside of the docker container
 #   ./docker-make.sh --cpus 4 -- http_server
 #
-# NOTE: For more details, please see description for the `split_params()` shell function in the `docker-env.sh` script.
+# NOTE: For more details, please see description for the `split_params()` shell function in the `docker-common.sh` script.
 cd ${0%/*}
-. ./docker-env.sh
+. ./docker-env-common.sh
 . ./docker-common.sh
 
 docker_run_callback() {

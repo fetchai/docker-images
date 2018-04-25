@@ -7,10 +7,10 @@
 #
 #   # The following example provides `-p 8080:8080` parameter to `docker run` command (exports inner docker network port 8080 to outer(host OS) port 8080) and excutes `http_server` executable inside of the docker container: 
 #   ./docker-run.sh -p 8080:8080 -- build/examples/http_server
-# NOTE: For more details, please see description for the `split_params()` shell function in the `docker-env.sh` script.
+# NOTE: For more details, please see description for the `split_params()` shell function in the `docker-common.sh` script.
  
 cd ${0%/*}
-. ./docker-env.sh
+. ./docker-env-common.sh
 . ./docker-common.sh
 
 docker_run_callback() {

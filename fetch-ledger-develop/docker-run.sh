@@ -1,1 +1,0 @@
-../scripts/docker-run.sh
