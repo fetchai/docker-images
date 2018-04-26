@@ -1,13 +1,19 @@
 #!/bin/bash
 
-cd ${0%/*}
-. ./docker-env-common.sh
-. ./docker-common.sh
+SCRIPTS_DIR=${0%/*}
+. "$SCRIPTS_DIR"/docker-env-common.sh
+. "$SCRIPTS_DIR"/docker-common.sh
 
 docker_build_callback() {
-    local DOCKER_PARAMS="$1"
-    local EXECUTABLE_PARAMS="$2"
-    local COMMAND="docker build $DOCKER_PARAMS -t $DOCKER_IMAGE_TAG $EXECUTABLE_PARAMS ../"
+    local IMMEDIATE_PARAMS="$1"
+    local TAIL_PARAMS="$2"
+
+    if [ -n "${DOCKERFILE}" ]; then
+        TAIL_PARAMS="-f $DOCKERFILE $TAIL_PARAMS"
+    fi
+
+    local COMMAND="docker build $IMMEDIATE_PARAMS -t $DOCKER_IMAGE_TAG $TAIL_PARAMS $DOCKER_BUILD_CONTEXT_DIR"
+
     echo $COMMAND
     $COMMAND
 }

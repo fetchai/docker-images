@@ -1,11 +1,5 @@
 #!/bin/bash
 
-echo http_proxy =$http_proxy
-echo https_proxy=$https_proxy
-echo no_proxy=$no_proxy
-
-test -t 1 && USE_TTY="-t"
-
 # Description: This function splits commandline parameters to two groups - left
 # and right groups of parameters. 
 # The split to this two groups is controlled by the '--' commandline parameter
@@ -41,7 +35,6 @@ test -t 1 && USE_TTY="-t"
 #
 #   # The following example provides `-p 8080:8080` parameter to `docker run` command (exports inner docker network port 8080 to outer(host OS) port 8080) and excutes `http_server` executable inside of the docker container: 
 #   ./docker-run.sh -p 8080:8080 -- build/examples/http_server
-
 split_params()
 {
   local CALLBACK_FNC_NAME=$1

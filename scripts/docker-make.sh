@@ -6,16 +6,17 @@
 #   ./docker-make.sh --cpus 4 -- http_server
 #
 # NOTE: For more details, please see description for the `split_params()` shell function in the `docker-common.sh` script.
-cd ${0%/*}
-. ./docker-env-common.sh
-. ./docker-common.sh
+
+SCRIPTS_DIR=${0%/*}
+. "$SCRIPTS_DIR"/docker-env-common.sh
+. "$SCRIPTS_DIR"/docker-common.sh
 
 docker_run_callback() {
     local DOCKER_PARAMS="$1"
     local MAKE_PARAMS="$2"
-    local COMMAND="./docker-run.sh $DOCKER_PARAMS -- ./docker-local-make.sh $MAKE_PARAMS"
+    local COMMAND="$SCRIPTS_DIR/docker-run.sh $DOCKER_PARAMS -- $DOCKER_LOCAL_MAKE $MAKE_PARAMS"
     echo $COMMAND
-    $COMMAND
+    . $COMMAND
 }
 
 split_params docker_run_callback "$@"

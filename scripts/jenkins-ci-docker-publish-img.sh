@@ -10,7 +10,7 @@ set-docker-credentails-helpers() {
         \"asia.gcr.io\": \"gcloud\",
         \"staging-k8s.gcr.io\": \"gcloud\"
       }
-    }" >> ~/.docker/config.json
+    }" >> "$DOCKER_CONFIG_DIR"/config.json
 }
 
 set-docker-credentails-helpers
