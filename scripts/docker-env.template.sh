@@ -1,7 +1,7 @@
 #!/nin/bash
 
 #############################################################################
-### **MANDATORY** variables section
+# #### **MANDATORY** variables section
 # Variables in this section **MUST** be set in `docker-env.sh` file
 
 # ---------------------------------------------------------------------------
@@ -11,7 +11,7 @@ DOCKER_IMAGE_TAG=
 
 
 #############################################################################
-### **NON**-mandatory variables
+# #### **NON**-mandatory variables
 # They **can** be overriden in this file. Their default value is defined by scripts insfrastructure.
 
 # ---------------------------------------------------------------------------
