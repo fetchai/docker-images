@@ -63,3 +63,32 @@ split_params()
   "$CALLBACK_FNC_NAME" "$LEFT_PARAMS_GROUP" "$RIGHT_PARAMS_GROUP"
 }
 
+add_parent_to_relative_path() {
+    local path="$1"
+    local parent="$2"
+    if [[ ! "$path" = /* ]]
+    then
+        local temp_path="$parent"
+        if [[ -n "$temp_path" && -n $path ]]
+        then
+            temp_path="$temp_path/"
+        fi
+
+        path="$temp_path$path"
+    fi
+    echo "$path"
+}
+
+abs_path() {
+    local path="$1"
+    if [ -f "$path" ]; then
+        path="$(add_parent_to_relative_path "$(basename "$path")" "$(cd $(dirname "$path"); pwd)")"
+    elif [ -d "$path" ]; then
+        path="$(cd $path; pwd)"
+    else
+        path=
+    fi
+
+    echo "$path"
+}
+

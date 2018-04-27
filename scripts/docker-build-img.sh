@@ -1,8 +1,8 @@
 #!/bin/bash
+set -e
 
 SCRIPTS_DIR=${0%/*}
 . "$SCRIPTS_DIR"/docker-env-common.sh
-. "$SCRIPTS_DIR"/docker-common.sh
 
 docker_build_callback() {
     local IMMEDIATE_PARAMS="$1"

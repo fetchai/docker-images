@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 set-docker-credentails-helpers() {
     local DOCKER_CONFIG_DIR=~/.docker
     mkdir -p "$DOCKER_CONFIG_DIR"
