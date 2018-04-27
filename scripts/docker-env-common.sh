@@ -80,3 +80,8 @@ check_env() {
 
 check_env
 
+delete-image() {
+    local IMG_TAG=$1
+    docker image inspect "$IMG_TAG" >/dev/null 2>&1 && docker rmi "$IMG_TAG" || :
+}
+
