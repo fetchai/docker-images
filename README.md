@@ -8,11 +8,11 @@ This repository offers set of general bash scripts located in the `scripts` fold
 1. Each docker image setup **MUST** have its own dedicated directory. Lets assume, for ilustrational purposes of this guide that directory name will be the `my_image`.
 
 2. This dedicated directory (`my_image`) **MUST** contain following things at minumum (and can contain anything else):
-  * **`scripts`** directory
-    - this directory can be provided either by **symlink** pointing to git repo `scripts` dir (which is suggested way), or by copy (discouraged).
-  * **`docker-env.sh`** file
-    - this file defines set of environment variables which define docker image setup for building & usage.
-    - scripts from `scripts` direcory need this file to be present at this location (parent folder of `scripts` folder) since they are using enviroment variables defined by this file for they operations.
+   * **`scripts`** directory
+      - this directory can be provided either by **symlink** pointing to git repo `scripts` dir (which is suggested way), or by copy (discouraged).
+   * **`docker-env.sh`** file
+      - this file defines set of environment variables which define docker image setup for building & usage.
+      - scripts from `scripts` direcory need this file to be present at this location (parent folder of `scripts` folder) since they are using enviroment variables defined by this file for they operations.
 
 3. Scripts can be executed from anywhere (any directory on host OS filesystem).
 
