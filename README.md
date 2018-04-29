@@ -73,7 +73,7 @@ cd docker-images
 my_image/scripts/docker-run.sh bash
 ```
 
-> Direct execution of build - `make` in this case). This is just convenience command - it spins up container, executes build process in there, and exits the container.
+> Direct execution of build (the `make` in this specific example, but it can be changed in the `docker-env.sh` file). This is just convenience command - it spins up container, executes build process in there, and exits the container.
 ```bash
 cd docker-images
 my_image/scripts/docker-make.sh --help
@@ -86,7 +86,7 @@ Some scripts allow to provide parameters for docker and additional stuff. Please
 ```bash
 cd docker-images
 
-my_image/scripts/docker-build-img.sh --squash --cpus 4 ---compress --
+my_image/scripts/docker-build-img.sh --squash --cpus 4 --compress --
 
 # Above commandline example provides the `--squash --cpus 4 --compress` parameters to `docker build` command as IMMEDIATE_PARAMS, **ommiting** the TAIL_PARAMS (value of the var will be empty), where low level docker build commandline is:
 #   docker build $IMMEDIATE_PARAMS -t $DOCKER_IMAGE_TAG $TAIL_PARAMS $DOCKER_BUILD_CONTEXT_DI
