@@ -82,30 +82,47 @@ my_image/scripts/docker-make.sh --help
 # Advanced examples of scripts usage
 Some scripts allow to provide parameters for docker and additional stuff. Please refer to specific scripts to get details if they support additional parameters, if they do they contain comment section at the top of the script with usage & examples.
 
+NOTE: PLease note that the **standalone** `--` parameter (with whitespace characters around it from **both** sides) separates parameters to two groups: parameters listed to the left of it will form the "left" group and will be send to `docker` command (meaning they need to conform to parameters defined by `docker` command line manual), and the parameters listed to the right of it will form the "right" group and will be provided for the purpose whcih contextually matches the script meaning - please see examples bellow for detailed explanation.
+
 > Advanced usage of the `docker-build-img.sh`
 ```bash
 cd docker-images
 
 my_image/scripts/docker-build-img.sh --squash --cpus 4 --compress --
 
-# Above commandline example provides the `--squash --cpus 4 --compress` parameters to `docker build` command as IMMEDIATE_PARAMS, **ommiting** the TAIL_PARAMS (value of the var will be empty), where low level docker build commandline is:
-#   docker build $IMMEDIATE_PARAMS -t $DOCKER_IMAGE_TAG $TAIL_PARAMS $DOCKER_BUILD_CONTEXT_DI
-# And so the the resulting docker process commandline will be:
-#   docker build --cpus 4 --compress -t $DOCKER_IMAGE_TAG $DOCKER_BUILD_CONTEXT_DIR
-
+# Above commandline example recognise the `--squash --cpus 4 --compress` parameters as
+# the `right` group (to the right of the standalone `--` parameter) and will be sent 
+# to the `docker build` command as IMMEDIATE_PARAMS (see bellow). The `right` group of
+# parameters will be empty (as there are no paremeters provided to the right of the
+# standalone `--` parameter) and will be set to the TAIL_PARAMS (= empty value), see
+# bellow.
+# Where general definition of the low level docker build commandline is:
+#   docker build $IMMEDIATE_PARAMS -t $DOCKER_IMAGE_TAG $TAIL_PARAMS $DOCKER_BUILD_CONTEXT_DIR
+# ==> And so the the resulting docker commandline (after substitution) will be:
+#   docker build --squash --cpus 4 --compress -t $DOCKER_IMAGE_TAG $DOCKER_BUILD_CONTEXT_DIR
+#, where DOCKER_IMAGE_TAG and DOCKER_BUILD_CONTEXT_DIR variables will be provided by 
+# scripts infrastructure (by `docker-env.sh` and `docker-env-common.sh`).
 ```
 
 > Advanced usage of the `docker-run.sh`
 ```bash
 cd docker-images
 
-my_image/scripts/docker-run.sh -p 80:8080 --cpus 4 -- build/examples/http_server -p 80
+my_image/scripts/docker-run.sh -p 8080:80 --cpus 4 -d -- build/examples/http_server -p 80
 
-# Above commandline example provides the `-p 8080:8080 --cpus 4` parameters to `docker run` command as DOCKER_PARAMS, and `build/examples/http_server -p 8080` as the EXECUTABLE_PARAMS, where low level docker build commandline is:
+# Above commandline example provides the `-p 8080:80 --cpus 4 -d` parameters to `docker run`
+# command as DOCKER_PARAMS, and the `build/examples/http_server -p 80` as the EXECUTABLE_PARAMS,
+# where low level docker run commandline is:
 #   docker run -i $USE_TTY -w $WORKDIR --rm $DOCKER_PARAMS -v $(pwd):$WORKDIR $DOCKER_IMAGE_TAG $EXECUTABLE_PARAMS
-# And so the the resulting docker process commandline will be:
-#   docker run -i $USE_TTY -w $WORKDIR --rm -p 8080:8080 --cpus 4 -t $DOCKER_IMAGE_TAG build/examples/http_server -p 8080
-# , where values for USE_TTY, WORKDIR and DOCKER_IMAGE_TAG variables will be provided by scripts infrastructure (by `docker-env.sh` and `docker-env-common.sh`)
+# ==> And so the the resulting docker process commandline will be:
+#   docker run -i $USE_TTY -w $WORKDIR --rm -p 8080:80 --cpus 4 -d -t $DOCKER_IMAGE_TAG build/examples/http_server -p 80
+#, where values for USE_TTY, WORKDIR and DOCKER_IMAGE_TAG variables will be provided by
+# scripts infrastructure (by `docker-env.sh` and `docker-env-common.sh`)
 #
-# NOTE: the `-p 8080:8080` parameter exposes internal docker container port 80 as 8080 port externally accessible from host OS wher docker container is running.
+# NOTE: The `-p 8080:80` parameter exposes internal docker container network port 80
+# to host OS network port 8080, what makes it externally accessible from host OS where
+# docker container is running. And `-d` param will ensure that docker runtime will
+# start the `build/examples/http_server` process in daemon mode (docker cli won't exit
+# until at least one daemon processes is running).
 ```
+
