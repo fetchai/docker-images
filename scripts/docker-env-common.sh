@@ -66,7 +66,7 @@ check_env() {
     DOCKER_ENV_CHECKED=true
 
     echo ["$DOCKER_ENV_SCRIPT"] DOCKER_IMAGE_TAG="${DOCKER_IMAGE_TAG:?"It is neccessary to set the DOCKER_IMAGE_TAG env var in the '$DOCKER_ENV_SCRIPT_PATH' file and it must be set to non-empty value"}"
-    echo ["$DOCKER_ENV_SCRIPT"] DOCKER_CONTAINER_REGISTRY="${DOCKER_CONTAINER_REGISTRY:?"It is neccessary to set the DOCKER_CONTAINER_REGISTRY env var either in '"$0"' or in the '$DOCKER_ENV_SCRIPT_PATH' file, and it must be set to non-empty value"}"
+    echo ["$DOCKER_ENV_SCRIPT"] DOCKER_CONTAINER_REGISTRY="${DOCKER_CONTAINER_REGISTRY:?"It is neccessary to set the DOCKER_CONTAINER_REGISTRY env var in the '$DOCKER_ENV_SCRIPT_PATH' file, and it must be set to non-empty value"}"
     echo ["$DOCKER_ENV_SCRIPT"] DOCKER_LOCAL_MAKE="${DOCKER_LOCAL_MAKE:?"The DOCKER_LOCAL_MAKE env var is not set. It looks like it has been uset (or set to empty value) in the '$DOCKER_ENV_SCRIPT_PATH' file."}"
 
     echo ["$DOCKER_ENV_SCRIPT"] pwd="$(pwd)"

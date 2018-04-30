@@ -6,8 +6,8 @@
 #       If you are using the Google cloud docker registry, please run the 
 #       'gcloud auth configure-docker' instead.
 
-cd ${0%/*}
-. ./docker-env-common.sh
+SCRIPTS_DIR=${0%/*}
+. "$SCRIPTS_DIR"/docker-env-common.sh
 
 docker tag "$DOCKER_IMAGE_TAG" "$REGISTRY_DOCKER_IMAGE_TAG"
 docker push "$REGISTRY_DOCKER_IMAGE_TAG"
