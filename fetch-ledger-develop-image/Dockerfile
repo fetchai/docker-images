@@ -5,10 +5,13 @@ ENV CXX=/usr/bin/clang++
 
 USER root
 
+# This adds the `default` user in to sudoers with full privileges:
 RUN groupadd sudo && \
     usermod -a -G sudo default && \
     echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
+# This installs basic setup for C++ development and main expected operations
+# during the development:
 RUN yum update -y && \
     yum install -y sudo && \
     yum install -y make && \
@@ -20,9 +23,14 @@ RUN yum update -y && \
     yum install -y clang && \
     yum install -y epel-release && \
     yum install -y python-pip && \
+    yum install -y git && \
     pip install --upgrade pip && \
-    pip install --upgrade cldoc &&  \
-    yum install -y git
+    pip install --upgrade cldoc && \
+    ( \
+        unset CC && \
+        unset CXX && \
+        pip install jupyter \
+    )
 
 USER default
 
