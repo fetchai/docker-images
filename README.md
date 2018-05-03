@@ -42,7 +42,7 @@ ln -s ../scripts scripts
 echo "DOCKER_IMAGE_TAG=my_image:latest" > docker-env.sh
 
 # Create trivial dockerfile:
-cat "FROM centos/devtoolset-4-toolchain-centos7:latest" > Dockerfile
+echo "FROM centos/devtoolset-4-toolchain-centos7:latest" > Dockerfile
 
 # Commit to git if desired:
 #git add .
