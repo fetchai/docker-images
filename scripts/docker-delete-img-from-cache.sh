@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e 
+
 SCRIPTS_DIR=${0%/*}
 . "$SCRIPTS_DIR"/docker-env-common.sh
 
