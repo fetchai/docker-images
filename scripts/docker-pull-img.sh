@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Usage:
 #   ./docker-pull-img.sh [docker pull parameters] -- [:TAG|@DIGEST]
 
@@ -14,7 +14,7 @@ docker_pull_callback() {
     $COMMAND
 }
 
-delete-image "$DOCKER_IMAGE_TAG"
+delete_image "$DOCKER_IMAGE_TAG"
 split_params docker_pull_callback "$@"
 docker tag "$REGISTRY_DOCKER_IMAGE_TAG_WITH_DIGEST" "$DOCKER_IMAGE_TAG"
 

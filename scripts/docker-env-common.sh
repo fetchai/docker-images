@@ -1,10 +1,14 @@
-#!/bin/bash
+#!/bin/sh
 set -e
  
 ##############################################################################
 # ####  PRIVATE section  #####################################################
 # Shall **not** be overriden in DOCKER_ENV_SCRIPT file.
-SCRIPTS_DIR=${0%/*}
+if [ -z ${SCRIPTS_DIR+x} ]
+then
+    SCRIPTS_DIR=${0%/*}
+fi
+
 SCRIPTS_PARENT_DIR="$(dirname "$SCRIPTS_DIR")"
 
 . "$SCRIPTS_DIR"/docker-common.sh
@@ -79,9 +83,4 @@ check_env() {
 }
 
 check_env
-
-delete-image() {
-    local IMG_TAG=$1
-    docker image inspect "$IMG_TAG" >/dev/null 2>&1 && docker rmi "$IMG_TAG" || :
-}
 

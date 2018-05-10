@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Description: This function splits commandline parameters to two groups - left
 # and right groups of parameters. 
@@ -90,5 +90,10 @@ abs_path() {
     fi
 
     echo "$path"
+}
+
+delete_image() {
+    local IMG_TAG=$1
+    docker image inspect "$IMG_TAG" >/dev/null 2>&1 && docker rmi "$IMG_TAG" || :
 }
 
