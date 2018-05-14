@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Description: This function splits commandline parameters to two groups - left
-# and right groups of parameters. 
+# and right groups of parameters.
 # The split to this two groups is controlled by the '--' commandline parameter
 # separator, where all parameters provided to the left of this separator will
 # located in the left parameters group, and all parameters to the right of this
@@ -13,7 +13,7 @@
 # and pN+2, pN+3, ..., pN+M will be assigned to the right parameters group.
 # Also, any and all of `p1, p2, ..., pN`, or `--`, or  `pN+2, pN+3, ..., pN+M` do *not* need to be provided, and so can be omitted. If all of them are omitted, then the `--` special parameter can be omitted as well.
 # Usage of this shell function:
-#   # The function passes the results (left and right params groups) as two input 
+#   # The function passes the results (left and right params groups) as two input
 #   # parameters to the callback shell function where desired business logic shall
 #   # be implemented. For example, bellow `callback` shell function implements
 #   # business logic which is just echo-ing left & right groups of params:
@@ -26,14 +26,14 @@
 #   # ESSENTIAL: The "$@" must be provided as second argument WITH QUOTATIONS AROUND IT
 #   split_params callback "$@"
 #
-# Usage in docker shell scripts: 
+# Usage in docker shell scripts:
 #   ./docker-run.sh <docker parameters> -- <executable> <executable parameters>
 #   ./docker-make.sh <docker parameters> -- <make parameters>
 # Examples:
 #   # The following example provides the `--cpus 4` parameter to `docker run` command (sets number of available CPUs for docker run) and executes `make -j http_server` executable with parameters inside of the docker container
 #   ./docker-run.sh --cpus 4 -- make -j http_server
 #
-#   # The following example provides `-p 8080:8080` parameter to `docker run` command (exports inner docker network port 8080 to outer(host OS) port 8080) and excutes `http_server` executable inside of the docker container: 
+#   # The following example provides `-p 8080:8080` parameter to `docker run` command (exports inner docker network port 8080 to outer(host OS) port 8080) and excutes `http_server` executable inside of the docker container:
 #   ./docker-run.sh -p 8080:8080 -- build/examples/http_server
 split_params()
 {
@@ -41,9 +41,9 @@ split_params()
   local LEFT_PARAMS_GROUP=
   local RIGHT_PARAMS_GROUP=
   local FOUND=false
-  local whitespace="[[:space:]]"
-
-  for i in "${@:2:$#-1}"; do
+  shift
+  for i in "$@"
+  do
     if ( [ "$FOUND" != "true" ] && [ "$i" == "--" ] ); then
       FOUND=true
       LEFT_PARAMS_GROUP=$RIGHT_PARAMS_GROUP
@@ -52,10 +52,11 @@ split_params()
     fi
 
     local escaped_i=$i
-    if [[ $i =~ $whitespace ]]
-    then
-      escaped_i=\"${i/\"/\\\"}\"
-    fi
+
+    case ${i} in
+      *\ * ) escaped_i=\"${i/\"/\\\"}\" ;;
+      * ) ;;
+    esac
 
     RIGHT_PARAMS_GROUP=$RIGHT_PARAMS_GROUP" "$escaped_i
   done
@@ -66,7 +67,7 @@ split_params()
 add_parent_to_relative_path() {
     local path="$1"
     local parent="$2"
-    if [[ ! "$path" = /* ]]
+    if [[ ! "${path:0:1}" = "/" ]]
     then
         local temp_path="$parent"
         if [[ -n "$temp_path" && -n $path ]]
