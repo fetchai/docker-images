@@ -1,13 +1,11 @@
-#!/bin/sh
-
-set -e 
+#!/bin/sh -ex 
 
 SCRIPTS_DIR=${0%/*}
 . "$SCRIPTS_DIR"/docker-env-common.sh
 
 delete_dangling_layers() {
     local LAYERS=$(docker images -f dangling=true -q)
-    if [[ -z ${LAYERS+x} ]]
+    if [[ -n $LAYERS" ]]
     then 
         docker rmi $LAYERS
     fi
