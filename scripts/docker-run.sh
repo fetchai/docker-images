@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Usage:
 #   ./docker-run.sh <docker parameters> -- <executable> <executable parameters>
 # Examples:
