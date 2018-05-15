@@ -68,10 +68,10 @@ add_parent_to_relative_path() {
     local path="$1"
     local parent="$2"
     local first_char_in_path=${path%"${path#?}"}
-    if [[ ! "$first_char_in_path" = "/" ]]
+    if [ "$first_char_in_path" != "/" ]
     then
         local temp_path="$parent"
-        if [[ -n "$temp_path" && -n "$path" ]]
+        if [ -n "$temp_path" && -n "$path" ]
         then
             temp_path="$temp_path/"
         fi
