@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Usage:
 #   ./docker-make.sh <docker parameters> -- <parameters for make>
 # Examples:
