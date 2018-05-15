@@ -44,7 +44,8 @@ split_params()
   shift
   for i in "$@"
   do
-    if ( [ "$FOUND" != "true" ] && [ "$i" == "--" ] ); then
+    if ( [ "$FOUND" != "true" ] && [ "$i" == "--" ] )
+    then
       FOUND=true
       LEFT_PARAMS_GROUP=$RIGHT_PARAMS_GROUP
       RIGHT_PARAMS_GROUP=
@@ -71,7 +72,7 @@ add_parent_to_relative_path() {
     if [ "$first_char_in_path" != "/" ]
     then
         local temp_path="$parent"
-        if [ -n "$temp_path" && -n "$path" ]
+        if ( [ -n "$temp_path" ] && [ -n "$path" ] )
         then
             temp_path="$temp_path/"
         fi
