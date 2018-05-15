@@ -5,7 +5,7 @@ SCRIPTS_DIR=${0%/*}
 
 delete_dangling_layers() {
     local LAYERS=$(docker images -f dangling=true -q)
-    if [[ -n $LAYERS" ]]
+    if [ -n "$LAYERS" ]
     then 
         docker rmi $LAYERS
     fi
