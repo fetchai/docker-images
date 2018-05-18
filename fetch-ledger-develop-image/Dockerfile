@@ -63,6 +63,7 @@ RUN bash --login -c "\
     cd /src && \
     wget http://sourceforge.net/projects/boost/files/boost/1.67.0/boost_1_67_0.tar.gz && \
     tar -xzvf boost_1_67_0.tar.gz && \
+    rm boost_1_67_0.tar.gz && \
     cd boost_1_67_0 && \
     ./bootstrap.sh --with-toolset=clang --prefix=/usr/local && \
     NUMBER_OF_CPU_CORES=\"\$((2 * `getconf _NPROCESSORS_ONLN`))\" && \
@@ -87,19 +88,35 @@ RUN bash --login -c "\
 # ==== phantomjs (with node.js) ====
 # This setup is here added in order to enable javascript execution (originally
 # for purposes of WebSocket server testing.
-RUN sudo yum install -y epel-release
-RUN curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
-RUN sudo yum install -y nodejs
-RUN sudo yum install -y bzip2
-RUN sudo npm install -g phantomjs-prebuilt --unsafe-perm
-RUN sudo yum install -y libxml2-devel
+RUN sudo yum install -y epel-release && \
+    curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash - && \
+    sudo yum install -y nodejs && \
+    sudo yum install -y bzip2 && \
+    sudo npm install -g phantomjs-prebuilt --unsafe-perm && \
+    sudo yum install -y file && \
+    sudo yum install -y gperf && \
+    sudo yum install -y libtool && \
+    sudo yum install -y libxml2-devel && \
+    sudo yum install -y gettext-devel && \
+    sudo yum install -y libuuid-devel
+
 RUN bash --login -c "\
     cd /src && \
-    wget http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.11.0.tar.gz && \
-    tar -zxvf fontconfig-2.11.0.tar.gz && \
-    rm -f fontconfig-2.11.0.tar.gz && \
-    cd fontconfig-2.11.0 && \
-    ./configure --sysconfdir=/etc --prefix=/usr --mandir=/usr/share/man --enable-libxml2 && \
+    HOME=\"\$(pwd)\" && \
+    git clone https://git.sv.nongnu.org/r/freetype/freetype2.git && \
+    cd freetype2 && \
+    ./autogen.sh && \
+    make -j && \
+    sudo make -j install"
+
+ENV PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/pkgconfig:/usr/share/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig
+
+RUN bash --login -c "\
+    cd /src && \
+    HOME=\"\$(pwd)\" && \
+    git clone https://github.com/freedesktop/fontconfig.git && \
+    cd fontconfig && \
+    ./autogen.sh --sysconfdir=/etc --prefix=/usr --mandir=/usr/share/man --enable-libxml2 && \
     make -j && \
     sudo make -j install"
 
