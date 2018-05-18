@@ -83,6 +83,31 @@ RUN bash --login -c "\
 # ==== BOOST(1.67.0) & GOURCE ====
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+# vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+# ==== phantomjs (with node.js) ====
+# This setup is here added in order to enable javascript execution (originally
+# for purposes of WebSocket server testing.
+RUN sudo yum install -y epel-release
+RUN curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
+RUN sudo yum install -y nodejs
+RUN sudo yum install -y bzip2
+RUN sudo npm install -g phantomjs-prebuilt --unsafe-perm
+RUN sudo yum install -y libxml2-devel
+RUN bash --login -c "\
+    cd /src && \
+    wget http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.11.0.tar.gz && \
+    tar -zxvf fontconfig-2.11.0.tar.gz && \
+    rm -f fontconfig-2.11.0.tar.gz && \
+    cd fontconfig-2.11.0 && \
+    ./configure --sysconfdir=/etc --prefix=/usr --mandir=/usr/share/man --enable-libxml2 && \
+    make -j && \
+    sudo make -j install"
+
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib
+
+# ==== phantomjs (with node.js) ====
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 WORKDIR /build
 ENTRYPOINT []
 
