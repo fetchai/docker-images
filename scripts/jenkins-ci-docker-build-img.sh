@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 
 SCRIPTS_DIR=${0%/*}
 

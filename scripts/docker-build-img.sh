@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # Usage:
 #   ./docker-build-img.sh <IMMEDIATE_PARAMS> -- <TAIL_PARAMS>
 # Where:
@@ -8,7 +8,7 @@
 #
 # Examples:
 #  * the following example provides the `--cpus 4 --compress` parameters to `docker build` command as IMMEDIATE_PARAMS, **ommiting** the TAIL_PARAMS:
-#    
+#
 #    ./docker-build-img.sh --cpus 4 ---compress --
 #    # the the resulting docker process commandline will be:
 #    #   docker build --cpus 4 --compress -t $DOCKER_IMAGE_TAG $TAIL_PARAMS $DOCKER_BUILD_CONTEXT_DIR
@@ -18,10 +18,8 @@
 #    ./docker-build-img.sh --squash -- ../../
 #    # the the resulting docker process commandline will be:
 #    #   docker build --squash -t $DOCKER_IMAGE_TAG ../../ $DOCKER_BUILD_CONTEXT_DIR
-#    # the `DOCKER_BUILD_CONTEXT_DIR` shall be set to empty string in `docker-env.sh` file. 
+#    # the `DOCKER_BUILD_CONTEXT_DIR` shall be set to empty string in `docker-env.sh` file.
 # NOTE: For more details, please see description for the `split_params()` shell function in the `docker-common.sh` script.
-
-set -e
 
 SCRIPTS_DIR=${0%/*}
 . "$SCRIPTS_DIR"/docker-env-common.sh

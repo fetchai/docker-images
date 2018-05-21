@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # Usage:
 #   ./docker-make.sh <docker parameters> -- <parameters for make>
 # Examples:
@@ -15,7 +15,7 @@ docker_run_callback() {
     local MAKE_PARAMS="$2"
     local COMMAND="$SCRIPTS_DIR/docker-run.sh $DOCKER_PARAMS -- $DOCKER_LOCAL_MAKE $MAKE_PARAMS"
     echo $COMMAND
-    . $COMMAND
+    $COMMAND
 }
 
 split_params docker_run_callback "$@"

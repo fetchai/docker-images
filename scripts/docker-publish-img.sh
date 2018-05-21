@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # NOTE: First docker needs to be authorized to push image to container registry.
 #       Normally this is done using 'docker login <registrey_url>', where the
 #       'registry_url' value is set in the $DOCKER_CONTAINER_REGISTRY environment 
