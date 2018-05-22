@@ -70,6 +70,8 @@ RUN bash --login -c "\
     echo NUMBER_OF_CPU_CORES: \$NUMBER_OF_CPU_CORES && \
     sudo ./b2 -j\$NUMBER_OF_CPU_CORES install --with=all"
 
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+
 RUN bash --login -c "\
     cd /src && \
     git clone https://github.com/acaudwell/Gource.git && \
