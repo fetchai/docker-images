@@ -1,4 +1,22 @@
-FROM centos/devtoolset-4-toolchain-centos7:latest
+FROM arm64v8/centos:centos7
+
+RUN yum install -y deltarpm && \
+    yum update -y && \
+    INSTALL_PKGS="gcc gcc-c++ gcc-gfortran gdb" && \
+    yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
+    rpm -V $INSTALL_PKGS && \
+    yum clean all -y
+
+ENV HOME=/opt/app-root/src \
+    PATH=/opt/app-root/src/bin:/opt/app-root/bin:/opt/rh/devtoolset-7/root/usr/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+RUN mkdir -p ${HOME} && \
+    groupadd -r default -f -g 1001 && \
+    useradd -u 1001 -r -g default -d ${HOME} -s /sbin/nologin \
+    -c "Default Application User" default && \
+    chown -R 1001:1001 /opt/app-root
+#    chown -R 1001:1001 /opt/app-root /usr/bin/container-entrypoint /usr/bin/usage && \
+#    chmod u+x /usr/bin/usage
 
 ENV CC=/usr/bin/clang
 ENV CXX=/usr/bin/clang++
@@ -12,8 +30,7 @@ RUN groupadd sudo && \
 
 # This installs basic setup for C++ development and main expected operations
 # during the development:
-RUN yum update -y && \
-    yum install -y sudo && \
+RUN yum install -y sudo && \
     yum install -y make && \
     yum install -y cmake && \
     yum install -y libpng-devel && \
