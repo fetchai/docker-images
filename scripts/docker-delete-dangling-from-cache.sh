@@ -1,7 +1,4 @@
-#!/bin/bash -x
-
-SCRIPTS_DIR=${0%/*}
-. "$SCRIPTS_DIR"/docker-env-common.sh
+#!/bin/bash -e
 
 delete_dangling_layers() {
     local LAYERS=$(docker images -f dangling=true -q)
