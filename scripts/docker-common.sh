@@ -103,3 +103,16 @@ delete_image() {
     docker image inspect "$IMG_TAG" >/dev/null 2>&1 && docker rmi "$IMG_TAG" || :
 }
 
+delete_dangling_layers() {
+    while true
+    do
+        local LAYERS=$(docker images -f dangling=true -q)
+        if [[ -n $LAYERS ]]
+        then 
+	        docker rmi -f $LAYERS
+        else
+            break 1
+        fi
+    done
+}
+

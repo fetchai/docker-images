@@ -3,6 +3,22 @@ Dockerfiles, scripts and setup necesary to build & use docker images used by Fet
 
 This repository offers set of general bash scripts located in the `scripts` folder, which are designed to be used to build & use any docker image.
 
+# Usage (quick guide)
+
+1. We first need to build our `develop` docker image locally on our host OS:
+    ```bash
+    ./develop-image/scripts/docker-build-img.sh
+    ```
+1. Start `bash` shell in docker container based on our `devlop` image:
+    ```bash
+    ./develop-image/scripts/docker-run.sh bash
+    ```
+
+1. Run `make` helper:
+    ```bash
+    ./develop-image/scripts/docker-make.sh [NON-MANDATORY_PARAMS_FOR_MAKE]
+    ```
+
 # Concept
 
 1. Each docker image setup **MUST** have its own dedicated directory. Lets assume, for ilustrational purposes of this guide that directory name will be the `my_image`.
