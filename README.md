@@ -1,9 +1,11 @@
-# docker-images
-Dockerfiles, scripts and setup necesary to build & use docker images used by Fetch.ai (e.g. for build, CI, etc. ...)
+This repository simplifies usage of docker in general, but mainly for purposes of development.
 
-This repository offers set of general bash scripts located in the `scripts` folder, which are designed to be used to build & use any docker image.
+The setup is done the way that it supports comfortable development - you can edit files locally on your host OS, and just build & run binaries in docker. Build & run is simplifiead to bare minimum so you won't feel any overhead in terms of number of commands/steps you need to perform, or performance, comparing to building & runing stuff directly on local host OS.
 
-# Usage (quick guide)
+Note: Please see the [Docker](#docker_inst_setup) section at the end of this document how to install and setup the docker component.
+
+Usage (quick guide)<a name="guick_usage_guide"></a>
+===================
 
 1. We first need to build our `develop` docker image locally on our host OS:
     ```bash
@@ -19,7 +21,8 @@ This repository offers set of general bash scripts located in the `scripts` fold
     ./develop-image/scripts/docker-make.sh [NON-MANDATORY_PARAMS_FOR_MAKE]
     ```
 
-# Concept
+Concept
+=======
 
 1. Each docker image setup **MUST** have its own dedicated directory. Lets assume, for ilustrational purposes of this guide that directory name will be the `my_image`.
 
@@ -34,14 +37,17 @@ This repository offers set of general bash scripts located in the `scripts` fold
 
    However, be aware that `docker-run.sh` and `docker-make.sh` scripts mount **current working directory** from host OS filesystem as volume in to the docker running container, making it available (read & write) in the running container.
    
-# The `docker-env.sh` file
+The `docker-env.sh` file
+========================
+
 This file defines the docker image setup for building, deployment and running.
 
 It allows to set small set of environment variables which are used by scripts, where only one env var is mandatory to be set really.
 
 The `scripts/docker-env.template.sh` file is template which is supposed to be used by copy to create new `docker-env.sh` file in to its own dedicated directory. Please refer to this file to get list of variables and detailed description.
 
-# Example how to create new image & use scripts with it
+Example how to create new image & use scripts with it
+=====================================================
 
 > Creating new image
 ```bash
@@ -95,7 +101,9 @@ cd docker-images
 my_image/scripts/docker-make.sh --help
 ```
 
-# Advanced examples of scripts usage
+Advanced examples of scripts usage
+==================================
+
 Some scripts allow to provide parameters for docker and additional stuff. Please refer to specific scripts to get details if they support additional parameters, if they do they contain comment section at the top of the script with usage & examples.
 
 NOTE: PLease note that the **standalone** `--` parameter (with whitespace characters around it from **both** sides) separates parameters to two groups: parameters listed to the left of it will form the "left" group and will be send to `docker` command (meaning they need to conform to parameters defined by `docker` command line manual), and the parameters listed to the right of it will form the "right" group and will be provided for the purpose whcih contextually matches the script meaning - please see examples bellow for detailed explanation.
@@ -141,4 +149,18 @@ my_image/scripts/docker-run.sh -p 8080:80 --cpus 4 -d -- build/examples/http_ser
 # start the `build/examples/http_server` process in daemon mode (docker cli won't exit
 # until at least one daemon processes is running).
 ```
+
+Docker <a name="docker_inst_setup"></a>
+=============================
+
+The advantage of using the `Docker` is absolutely stable and reproducible setup (what is definitely important for test environment, but also for development and production environments) no matter what host OS setup is. Advantage is that this avoids necessity to install & maintain all necessary components directly on host OS (e.g. whole build chain, dependencies, tools, etc.) - this is done in docker and so it will eliminate issue with differencies of setup on different development machines, etc. ... 
+
+## Installation
+Download the Docker (Community Edition) installtion package for your plafrom from https://store.docker.com/search?type=edition&offering=community (or alternativelly use more general https://www.docker.com/community-edition instead if the previous link does not work for you) and install it.
+
+## Setup
+Find Docker icon in system status bar (on Mac OS X top right side of the screen, or bottom right on Windows OS). Rightclick on the the `Preferences`. There go to the `Advanced` tab where pull all resources to the maximum (CPU, Memory, Swap, etc. ...), don't worry Docker will use on demand (momentarily) only as much resources as it actually needs, what means it immediatelly releases resources which are not used.
+If your network setup needs to use proxy, it can be done in the `Proxies` tab.
+==> **Click at `Apply & Restart` to reflect changes**, Docker daemon will restartfully is 
+, wait until the daemon is fully up & running again.
 
