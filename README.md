@@ -2,7 +2,7 @@ This repository simplifies usage of docker in general, but mainly for purposes o
 
 The setup is done the way that it supports comfortable development - you can edit files locally on your host OS, and just build & run binaries in docker. Build & run is simplifiead to bare minimum so you won't feel any overhead in terms of number of commands/steps you need to perform, or performance, comparing to building & runing stuff directly on local host OS.
 
-**Note 1:** Please see the [Docker](#docker_inst_setup) section at the end of this document how to **install and setup** the docker component.
+**Note 1:** Please see the [Docker](#docker_inst_setup) section at the end of this document how to **install and setup** the docker component.<br/>
 **Note 2:** Please configure your local git settings based on [this guide](README_git_setup.md).
 
 Usage (quick guide)<a name="guick_usage_guide"></a>
