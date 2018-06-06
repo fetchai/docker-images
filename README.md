@@ -2,7 +2,8 @@ This repository simplifies usage of docker in general, but mainly for purposes o
 
 The setup is done the way that it supports comfortable development - you can edit files locally on your host OS, and just build & run binaries in docker. Build & run is simplifiead to bare minimum so you won't feel any overhead in terms of number of commands/steps you need to perform, or performance, comparing to building & runing stuff directly on local host OS.
 
-Note: Please see the [Docker](#docker_inst_setup) section at the end of this document how to install and setup the docker component.
+**Note 1:** Please see the [Docker](#docker_inst_setup) section at the end of this document how to **install and setup** the docker component.<br/>
+**Note 2:** Please configure your local git settings based on [this guide](README_git_setup.md).
 
 Usage (quick guide)<a name="guick_usage_guide"></a>
 ===================
@@ -151,7 +152,7 @@ my_image/scripts/docker-run.sh -p 8080:80 --cpus 4 -d -- build/examples/http_ser
 ```
 
 Docker <a name="docker_inst_setup"></a>
-=============================
+=======================================
 
 The advantage of using the `Docker` is absolutely stable and reproducible setup (what is definitely important for test environment, but also for development and production environments) no matter what host OS setup is. Advantage is that this avoids necessity to install & maintain all necessary components directly on host OS (e.g. whole build chain, dependencies, tools, etc.) - this is done in docker and so it will eliminate issue with differencies of setup on different development machines, etc. ... 
 
@@ -163,4 +164,6 @@ Find Docker icon in system status bar (on Mac OS X top right side of the screen,
 If your network setup needs to use proxy, it can be done in the `Proxies` tab.
 ==> **Click at `Apply & Restart` to reflect changes**, Docker daemon will restartfully is 
 , wait until the daemon is fully up & running again.
+
+
 
