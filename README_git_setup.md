@@ -64,7 +64,7 @@ We would like to share a few things how to improve your git setup. It should sim
 Execute following sequence of commands to add new aliases to your user level git config:
 
 ```sh
-git config --global alias.pullall '!f(){ git pull "$@" && git submodule sync --recursive && git submodule update --init --recursive; }; f'
+git config --global alias.pullall '!f(){ git pull "$@" && git syncUpdate; }; f'
 
 git config --global alias.syncUpdate '!f(){ git submodule sync --recursive && git submodule update --init --recursive; }; f'
 
