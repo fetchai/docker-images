@@ -116,7 +116,7 @@ cd docker-images
 my_image/scripts/docker-build-img.sh --squash --cpus 4 --compress --
 
 # Above commandline example recognise the `--squash --cpus 4 --compress` parameters as
-# the `right` group (to the right of the standalone `--` parameter) and will be sent 
+# the `left` group (to the left of the standalone `--` parameter) and will be sent 
 # to the `docker build` command as IMMEDIATE_PARAMS (see bellow). The `right` group of
 # parameters will be empty (as there are no paremeters provided to the right of the
 # standalone `--` parameter) and will be set to the TAIL_PARAMS (= empty value), see
