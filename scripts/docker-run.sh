@@ -15,7 +15,7 @@ SCRIPTS_DIR=${0%/*}
 docker_run_callback() {
     local DOCKER_PARAMS="$1"
     local EXECUTABLE_PARAMS="$2"
-    local COMMAND="docker run -i $USE_TTY -w $WORKDIR --rm  $DOCKER_PARAMS -v $(pwd):$WORKDIR:cached $DOCKER_IMAGE_TAG $EXECUTABLE_PARAMS"
+    local COMMAND="docker run -i $USE_TTY -w $WORKDIR --rm  $DOCKER_PARAMS -v $(pwd):$WORKDIR $DOCKER_IMAGE_TAG $EXECUTABLE_PARAMS"
     echo $COMMAND
     $COMMAND
 }
