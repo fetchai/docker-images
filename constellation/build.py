@@ -3,6 +3,7 @@ import os
 import shutil
 import subprocess
 
+
 def detect_project_path():
     project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 
@@ -23,6 +24,7 @@ def detect_project_path():
 
     return project_path
 
+
 def build_alpine_constellation(project_path):
     docker_path = os.path.join(project_path, 'docker-images', 'fetch-ledger-alpine-dev')
     build_image_script_path = os.path.join(docker_path, 'scripts', 'docker-build-img.sh')
@@ -31,8 +33,9 @@ def build_alpine_constellation(project_path):
     # build the image
     subprocess.check_call([build_image_script_path], cwd=project_path)
 
-    # compile the code
+    # compile the code (inside the development image)
     subprocess.check_call([compile_script_path], cwd=project_path)
+
 
 def main():
     working_path = os.path.dirname(__file__)
