@@ -11,4 +11,4 @@ ADD constellation /app
 
 EXPOSE 8000-8020
 
-CMD /app/constellation
+CMD /app/constellation -boostrap
