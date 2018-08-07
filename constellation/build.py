@@ -4,10 +4,13 @@ import shutil
 import subprocess
 import argparse
 
+GCR_PROJECT = 'organic-storm-201412'
+
 
 def parse_commandline():
     parser = argparse.ArgumentParser()
     parser.add_argument('--rebuild', action='store_true', help='Rebuild the image')
+    parser.add_argument('-p', '--publish', action='store_true', help='Publish the image to GCR')
     return parser.parse_args()
 
 
@@ -32,6 +35,10 @@ def detect_project_path():
     return project_path
 
 
+def get_project_version(project_root):
+    return subprocess.check_output(['git', 'describe', '--dirty'], cwd=project_root).decode().strip()
+
+
 def build_alpine_constellation(project_path):
     docker_path = os.path.join(project_path, 'docker-images', 'fetch-ledger-alpine-dev')
     build_image_script_path = os.path.join(docker_path, 'scripts', 'docker-build-img.sh')
@@ -51,7 +58,11 @@ def main():
 
     # build the parent project first
     project_path = detect_project_path()
+    version = get_project_version(project_path)
     build_root = os.path.abspath(os.path.join(project_path, 'build-alpine'))
+
+    local_docker_tag = 'constellation:{}'.format(version)
+    remote_docker_tag = 'gcr.io/{}/{}'.format(GCR_PROJECT, local_docker_tag)
 
     # clean up
     if args.rebuild:
@@ -73,10 +84,29 @@ def main():
     cmd = [
         'docker',
         'build',
-        '-t', 'constellation',
+        '-t', local_docker_tag,
         '.'
     ]
     subprocess.check_call(cmd, cwd=working_path)
+
+    if args.publish:
+
+        # make the remote tag
+        cmd = [
+            'docker',
+            'tag',
+            local_docker_tag,
+            remote_docker_tag,
+        ]
+        subprocess.check_call(cmd)
+
+        # push the remote tag
+        cmd = [
+            'docker',
+            'push',
+            remote_docker_tag
+        ]
+        subprocess.check_call(cmd)
 
 
 
