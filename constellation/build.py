@@ -2,6 +2,13 @@
 import os
 import shutil
 import subprocess
+import argparse
+
+
+def parse_commandline():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--rebuild', action='store_true', help='Rebuild the image')
+    return parser.parse_args()
 
 
 def detect_project_path():
@@ -40,14 +47,21 @@ def build_alpine_constellation(project_path):
 def main():
     working_path = os.path.dirname(__file__)
 
+    args = parse_commandline()
+
     # build the parent project first
     project_path = detect_project_path()
+    build_root = os.path.abspath(os.path.join(project_path, 'build-alpine'))
+
+    # clean up
+    if args.rebuild:
+        shutil.rmtree(build_root)
+        os.makedirs(build_root, exist_ok=True)
 
     # compile the project
     build_alpine_constellation(project_path)
 
     # detect the build folder
-    build_root = os.path.abspath(os.path.join(project_path, 'build-alpine'))
     if not os.path.isdir(build_root):
         raise RuntimeError('Unable to find build root at: {}'.format(build_root))
 
