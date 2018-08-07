@@ -11,4 +11,5 @@ ADD constellation /app
 
 EXPOSE 8000-8020
 
-CMD /app/constellation -boostrap
+ENTRYPOINT ["/app/constellation"]
+
