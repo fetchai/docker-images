@@ -7,26 +7,26 @@ APPLICATION = '/app/constellation'
 
 
 def output(text):
-	sys.stderr.write(text + '\n')
-	sys.stderr.flush()
+    sys.stderr.write(text + '\n')
+    sys.stderr.flush()
 
 
 n = 0
 while True:
-	output('Starting application...')
+    output('Starting application...')
 
-	with open('/app/node-{}.log'.format(n), 'w') as node_log:
+    with open('/app/node-{}.log'.format(n), 'w') as node_log:
 
-		# run the application
-		exit_code = subprocess.call([APPLICATION], stdout=node_log, stderr=subprocess.STDOUT)
+        # run the application
+        exit_code = subprocess.call([APPLICATION, '-bootstrap'], stdout=node_log, stderr=subprocess.STDOUT)
 
-		if exit_code == 0:
-			output('Stopping application...')
-			break
+        if exit_code == 0:
+            output('Stopping application...')
+            break
 
-	output('Sleeping...')
+    output('Sleeping...')
 
-	time.sleep(30)
-	n += 1
+    time.sleep(30)
+    n += 1
 
-	output('Restarting application...')
+    output('Restarting application...')
