@@ -7,6 +7,10 @@ RUN mkdir -p /app/data && \
 	python3 \
 	libgcc
 
+ADD requirements.txt /app
+
+RUN pip3 install -r /app/requirements.txt
+
 WORKDIR /app/data
 ADD constellation /app
 ADD monitor.py /app
