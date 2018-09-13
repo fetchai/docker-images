@@ -61,6 +61,7 @@ def main():
     version = get_project_version(project_path)
     build_root = os.path.abspath(os.path.join(project_path, 'build-alpine'))
 
+    latest_docker_tag = 'constellation:latest'
     local_docker_tag = 'constellation:{}'.format(version)
     remote_docker_tag = 'gcr.io/{}/{}'.format(GCR_PROJECT, local_docker_tag)
 
@@ -84,8 +85,17 @@ def main():
     cmd = [
         'docker',
         'build',
-        '-t', local_docker_tag,
+        '-t', latest_docker_tag,
         '.'
+    ]
+    subprocess.check_call(cmd, cwd=working_path)
+
+    # also do the tag the image
+    cmd = [
+        'docker',
+        'tag',
+        latest_docker_tag,
+        local_docker_tag,
     ]
     subprocess.check_call(cmd, cwd=working_path)
 
@@ -107,7 +117,6 @@ def main():
             remote_docker_tag
         ]
         subprocess.check_call(cmd)
-
 
 
 if __name__ == '__main__':
