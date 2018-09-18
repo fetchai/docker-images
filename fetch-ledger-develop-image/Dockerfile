@@ -12,6 +12,8 @@ RUN apt-get update && \
     apt-get install -y gdb && \
     apt-get install -y clang-tidy && \
     apt-get install -y clang-format && \
+    apt-get install -y cmake-curses-gui && \
+    apt-get install -y llvm && \
     apt-get install -y sudo
 
 # This adds the `default` user in to sudoers with full privileges:
