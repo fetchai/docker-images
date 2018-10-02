@@ -23,7 +23,7 @@ if config is None:
 else:
 
     # decode the configuration
-    config = base64.b64decode(config)
+    config = base64.b64decode(config).decode()
     output('Config: ' + config)
 
     # json parse the config
