@@ -6,6 +6,10 @@ import argparse
 
 GCR_PROJECT = 'organic-storm-201412'
 
+PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+CONSTELLATION_PATH = os.path.abspath(os.path.dirname(__file__))
+ALPINE_PATH = os.path.join(PROJECT_PATH, 'docker-images', 'fetch-ledger-alpine')
+
 
 def parse_commandline():
     parser = argparse.ArgumentParser()
@@ -14,41 +18,34 @@ def parse_commandline():
     return parser.parse_args()
 
 
-def detect_project_path():
-    project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-
-    print(project_path)
-
+def check_project_path():
     tests = [
-        os.path.isdir(project_path),
-        os.path.isdir(os.path.join(project_path, 'docker-images')),
-        os.path.isdir(os.path.join(project_path, 'docker-images', 'fetch-ledger-alpine-dev')),
-        os.path.isfile(os.path.join(project_path, 'CMakeLists.txt')),
-        os.path.isfile(os.path.join(project_path, 'Jenkinsfile')),
-        os.path.isfile(os.path.join(project_path, 'LICENSE')),
-        os.path.isfile(os.path.join(project_path, 'README.md')),
+        os.path.isdir(PROJECT_PATH),
+        os.path.isdir(os.path.join(PROJECT_PATH, 'docker-images')),
+        os.path.isdir(os.path.join(ALPINE_PATH)),
+        os.path.isfile(os.path.join(PROJECT_PATH, 'CMakeLists.txt')),
+        os.path.isfile(os.path.join(PROJECT_PATH, 'Jenkinsfile')),
+        os.path.isfile(os.path.join(PROJECT_PATH, 'LICENSE')),
+        os.path.isfile(os.path.join(PROJECT_PATH, 'README.md')),
     ]
 
     if not all(tests):
         raise RuntimeError('Failed to detect project layout')
 
-    return project_path
+
+def get_project_version():
+    return subprocess.check_output(['git', 'describe', '--dirty=-wip'], cwd=PROJECT_PATH).decode().strip()
 
 
-def get_project_version(project_root):
-    return subprocess.check_output(['git', 'describe', '--dirty'], cwd=project_root).decode().strip()
-
-
-def build_alpine_constellation(project_path):
-    docker_path = os.path.join(project_path, 'docker-images', 'fetch-ledger-alpine-dev')
-    build_image_script_path = os.path.join(docker_path, 'scripts', 'docker-build-img.sh')
-    compile_script_path = os.path.join(docker_path, 'scripts', 'docker-make.sh')
+def build_alpine_constellation():
+    build_image_script_path = os.path.join(ALPINE_PATH, 'scripts', 'docker-build-img.sh')
+    compile_script_path = os.path.join(ALPINE_PATH, 'scripts', 'docker-make.sh')
 
     # build the image
-    subprocess.check_call([build_image_script_path], cwd=project_path)
+    subprocess.check_call([build_image_script_path], cwd=PROJECT_PATH)
 
     # compile the code (inside the development image)
-    subprocess.check_call([compile_script_path], cwd=project_path)
+    subprocess.check_call([compile_script_path, 'constellation'], cwd=PROJECT_PATH)
 
 
 def main():
@@ -57,9 +54,9 @@ def main():
     args = parse_commandline()
 
     # build the parent project first
-    project_path = detect_project_path()
-    version = get_project_version(project_path)
-    build_root = os.path.abspath(os.path.join(project_path, 'build-alpine'))
+    check_project_path()
+    version = get_project_version()
+    build_root = os.path.abspath(os.path.join(PROJECT_PATH, 'build-alpine'))
 
     latest_docker_tag = 'constellation:latest'
     local_docker_tag = 'constellation:{}'.format(version)
@@ -71,7 +68,7 @@ def main():
         os.makedirs(build_root, exist_ok=True)
 
     # compile the project
-    build_alpine_constellation(project_path)
+    build_alpine_constellation()
 
     # detect the build folder
     if not os.path.isdir(build_root):
