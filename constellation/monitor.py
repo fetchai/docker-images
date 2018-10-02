@@ -6,8 +6,10 @@ import os
 import json
 import requests
 import base64
+from pprint import pformat
 
 APPLICATION = '/app/constellation'
+MANIFEST_PATH = '/app/manifest.json'
 
 
 def output(text):
@@ -15,22 +17,52 @@ def output(text):
     sys.stderr.flush()
 
 
+def generateSection(obj):
+    return { 'uri': 'tcp://' + obj['externalIp'] + ':' + obj['clusterNode'], 'port': obj['container'] }
+
+
 # get the initial configuration from the environment variable
 config = os.environ.get('CONSTELLATION_CONFIG')
 
+cmd = [APPLICATION]
+
 if config is None:
-    output('Configuration not specified')
+    output('Configuration not present - running basic miner')
+    cmd += ['-mine']
+
 else:
 
     # decode the configuration
-    config = base64.b64decode(config).decode()
-    output('Config: ' + config)
+    config = json.loads(base64.b64decode(config).decode())
 
-    # json parse the config
-    config = json.loads(config)
+    # create the single instance configuration
+    manifest = {
+        'p2p': generateSection(config['ports']['p2p']),
+        'http': generateSection(config['ports']['http']),
+        'lanes': [],
+    }
+
+    # append the lane information
+    for lane in config['ports']['lanes']:
+        manifest['lanes'].append(generateSection(lane))
+
+    # debug configuration
+    output('Config:')
+    output(pformat(manifest))
+
+    # write out the app config
+    with open(MANIFEST_PATH, 'w') as manifest_file:
+        json.dump(manifest, manifest_file)
+
+    # update the cmd
+    cmd += ['-config', MANIFEST_PATH]
+
+    # enable mining if told to do so
+    if config.get('mining', False):
+        cmd += ['-mine']
 
 # run the main application
-subprocess.check_call([APPLICATION, '-mine'])
+subprocess.check_call(cmd)
 
 # find out external ip address
 # public_ip = requests.get('https://api.ipify.org').text
