@@ -18,7 +18,7 @@ def output(text):
 
 
 def generateSection(obj):
-    return { 'uri': 'tcp://' + obj['externalIp'] + ':' + obj['clusterNode'], 'port': obj['container'] }
+    return { 'uri': 'tcp://{}:{}'.format(obj['externalIp'], obj['clusterNode']), 'port': obj['container'] }
 
 
 # get the initial configuration from the environment variable
