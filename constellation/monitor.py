@@ -68,7 +68,7 @@ else:
         '-config', MANIFEST_PATH,
         '-host-name', config['name'],
         '-token', config['token'],
-        '-network-id', config['networkId'],
+        '-network-id', str(config['networkId']),
         '-bootstrap',
     ]
 
