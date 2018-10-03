@@ -48,14 +48,29 @@ else:
 
     # debug configuration
     output('Config:')
+    output(pformat(config))
+    output('')
+
+
+    output('Manifest:')
     output(pformat(manifest))
+    output('')
+
+    output('---------------------------------------------------------------------')
+    output('')
 
     # write out the app config
     with open(MANIFEST_PATH, 'w') as manifest_file:
         json.dump(manifest, manifest_file)
 
     # update the cmd
-    cmd += ['-config', MANIFEST_PATH]
+    cmd += [
+        '-config', MANIFEST_PATH,
+        '-host-name', config['name'],
+        '-token', config['token'],
+        '-network-id', config['networkId'],
+        '-bootstrap',
+    ]
 
     # enable mining if told to do so
     if config.get('mining', False):
