@@ -49,7 +49,7 @@ else:
 
     # append the lane information
     for lane in config['ports']['lanes']:
-        manifest['lanes'].append(generateSection(lane), public_ip)
+        manifest['lanes'].append(generateSection(lane, public_ip))
 
     # debug configuration
     output('Config:')
