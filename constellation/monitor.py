@@ -12,8 +12,7 @@ APPLICATION = '/app/constellation'
 MANIFEST_PATH = '/app/manifest.json'
 
 
-def output(*args):
-    text = ' '.join(*args)
+def output(text):
     sys.stderr.write(text + '\n')
     sys.stderr.flush()
 
@@ -25,7 +24,7 @@ def generateSection(obj, ip=None):
 
 # detect the public IP
 public_ip = requests.get('https://api.ipify.org').text
-output('Public IP: ', public_ip)
+output('Public IP: ' + public_ip)
 
 # get the initial configuration from the environment variable
 config = os.environ.get('CONSTELLATION_CONFIG')
