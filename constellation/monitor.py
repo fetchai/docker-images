@@ -12,15 +12,16 @@ APPLICATION = '/app/constellation'
 MANIFEST_PATH = '/app/manifest.json'
 
 
-def output(text):
+def output(*args):
+    text = ' '.join(*args)
     sys.stderr.write(text + '\n')
     sys.stderr.flush()
 
 
 def generateSection(obj, ip=None):
     externalIp = ip if ip is not None else obj['externalIp']
-
     return { 'uri': 'tcp://{}:{}'.format(externalIp, obj['clusterNode']), 'port': obj['container'] }
+
 
 # detect the public IP
 public_ip = requests.get('https://api.ipify.org').text
