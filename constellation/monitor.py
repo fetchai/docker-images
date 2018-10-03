@@ -17,9 +17,14 @@ def output(text):
     sys.stderr.flush()
 
 
-def generateSection(obj):
-    return { 'uri': 'tcp://{}:{}'.format(obj['externalIp'], obj['clusterNode']), 'port': obj['container'] }
+def generateSection(obj, ip=None):
+    externalIp = ip if ip is not None else obj['externalIp']
 
+    return { 'uri': 'tcp://{}:{}'.format(externalIp, obj['clusterNode']), 'port': obj['container'] }
+
+# detect the public IP
+public_ip = requests.get('https://api.ipify.org').text
+output('Public IP: ', public_ip)
 
 # get the initial configuration from the environment variable
 config = os.environ.get('CONSTELLATION_CONFIG')
@@ -37,14 +42,14 @@ else:
 
     # create the single instance configuration
     manifest = {
-        'p2p': generateSection(config['ports']['p2p']),
-        'http': generateSection(config['ports']['http']),
+        'p2p': generateSection(config['ports']['p2p'], public_ip),
+        'http': generateSection(config['ports']['http'], public_ip),
         'lanes': [],
     }
 
     # append the lane information
     for lane in config['ports']['lanes']:
-        manifest['lanes'].append(generateSection(lane))
+        manifest['lanes'].append(generateSection(lane), public_ip)
 
     # debug configuration
     output('Config:')
