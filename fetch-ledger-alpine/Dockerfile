@@ -9,6 +9,7 @@ RUN mkdir /build && \
 		openssl-dev \
 		python3-dev \
 		gcc \
+		git \
 		g++ \
 		clang-dev \
 		libexecinfo-dev \
