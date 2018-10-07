@@ -6,6 +6,7 @@ import os
 import json
 import requests
 import base64
+import random
 from pprint import pformat
 
 APPLICATION = '/app/constellation'
@@ -21,6 +22,12 @@ def generateSection(obj, ip=None):
     externalIp = ip if ip is not None else obj['externalIp']
     return { 'uri': 'tcp://{}:{}'.format(externalIp, obj['clusterNode']), 'port': obj['container'] }
 
+
+# add random start up delay
+output('Running backoff...')
+backoff = random.uniform(120.0, 360.0)
+time.sleep(backoff)
+output('Running backoff...complete')
 
 # detect the public IP
 public_ip = requests.get('https://api.ipify.org').text
