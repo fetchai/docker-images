@@ -12,7 +12,6 @@ from pprint import pformat
 APPLICATION = '/app/constellation'
 MANIFEST_PATH = '/app/manifest.json'
 
-
 def output(text):
     sys.stderr.write(text + '\n')
     sys.stderr.flush()
@@ -91,26 +90,3 @@ else:
 # run the main application
 subprocess.check_call(cmd)
 
-# find out external ip address
-# public_ip = requests.get('https://api.ipify.org').text
-# output('Public IP: ', public_ip)
-
-# n = 0
-# while True:
-#     output('Starting application...')
-
-#     with open('/app/node-{}.log'.format(n), 'w') as node_log:
-
-#         # run the application
-#         exit_code = subprocess.call([APPLICATION, '-mine'], stdout=node_log, stderr=subprocess.STDOUT)
-
-#         if exit_code == 0:
-#             output('Stopping application...')
-#             break
-
-#     output('Sleeping...')
-
-#     time.sleep(30)
-#     n += 1
-
-#     output('Restarting application...')
