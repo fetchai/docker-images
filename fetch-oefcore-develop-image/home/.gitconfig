@@ -1,0 +1,15 @@
+[user]
+	name = Docker Fetch.ai
+	email = docker@fetch.ai
+[pack]
+	windowMemory = 8192m
+[core]
+	editor = vim
+[url "https://github.com/"]
+	insteadOf = github:
+[alias]
+	syncUpdate = "!f(){ git submodule sync --recursive && git submodule update --init --recursive; }; f"
+	pullall = "!f(){ git pull \"$@\" && git syncUpdate; }; f"
+	logg = "!f(){ git log --graph --stat --decorate=full --color --word-diff=color -M -C --find-copies-harder -l100 --histogram \"$@\"; }; f"
+	oldest-ancestor = !zsh -c 'diff --old-line-format= --new-line-format= <(git rev-list --first-parent \"${1:-master}\") <(git rev-list --first-parent \"${2:-HEAD}\") | head -1' -
+
