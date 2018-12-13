@@ -15,6 +15,9 @@ RUN apt-get install -y clang && \
     apt-get install -y cmake-curses-gui && \
     apt-get install -y vim && \
     apt-get install -y llvm && \
+    apt-get install -y clang-tools && \
+    apt-get install -y perl-doc && \
+    apt-get install -y cppcheck && \
     apt-get install -y sudo
 
 # This adds the "default" user in to sudoers with full privileges:
