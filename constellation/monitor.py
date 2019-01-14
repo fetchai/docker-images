@@ -53,6 +53,8 @@ else:
         'lanes': [],
     }
 
+    num_lanes = len(config['ports']['lanes'])
+
     # append the lane information
     for lane in config['ports']['lanes']:
         manifest['lanes'].append(generateSection(lane, public_ip))
@@ -61,7 +63,6 @@ else:
     output('Config:')
     output(pformat(config))
     output('')
-
 
     output('Manifest:')
     output(pformat(manifest))
@@ -77,6 +78,7 @@ else:
     # update the cmd
     cmd += [
         '-config', MANIFEST_PATH,
+        '-lanes', str(num_lanes),
         '-host-name', config['name'],
         '-token', config['token'],
         '-network-id', str(config['networkId']),
