@@ -39,7 +39,7 @@ cmd = [APPLICATION]
 
 if config is None:
     output('Configuration not present - running basic miner')
-    cmd += ['-mine']
+    cmd += ['-mine', '1']
 
 else:
 
@@ -87,7 +87,7 @@ else:
 
     # enable mining if told to do so
     if config.get('mining', False):
-        cmd += ['-mine']
+        cmd += ['-mine', '1']
 
 # run the main application
 subprocess.check_call(cmd)
