@@ -115,7 +115,7 @@ else:
 
 # Backing off start up
 backoff = random.uniform(120.0, 360.0)
-output('Running backoff... ({} secs}'.format(backoff))
+output('Running backoff... ({} secs)'.format(backoff))
 time.sleep(backoff)
 output('Running backoff...complete')
 
