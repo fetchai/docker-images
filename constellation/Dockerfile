@@ -24,7 +24,6 @@ RUN cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFETCH_DISABLE_COLOUR_LOG=TRUE /app
 
 FROM alpine:edge
 
-
 RUN mkdir -p /app/data && \
 	apk add \
 	openssl \

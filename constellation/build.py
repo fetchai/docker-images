@@ -81,39 +81,6 @@ def main():
     subprocess.check_call(cmd)
     print('Building constellation image...complete')
 
-
-
-
-    # build_root = os.path.abspath(os.path.join(PROJECT_PATH, 'build-alpine'))
-
-
-    # # clean up
-    # if args.rebuild:
-    #     shutil.rmtree(build_root)
-    #     os.makedirs(build_root, exist_ok=True)
-
-    # # compile the project
-    # build_alpine_constellation()
-
-    # # detect the build folder
-    # if not os.path.isdir(build_root):
-    #     raise RuntimeError('Unable to find build root at: {}'.format(build_root))
-
-    # # copy the output folder
-    # constellation_app_path = os.path.join(build_root, 'apps', 'constellation', 'constellation')
-    # shutil.copy(constellation_app_path, working_path)
-
-    # # build the docker image
-    # cmd = [
-    #     'docker',
-    #     'build',
-    #     '-t', latest_docker_tag,
-    #     '.'
-    # ]
-    # subprocess.check_call(cmd, cwd=working_path)
-
-
-
     if args.publish:
 
         print('Publishing docker image...')
