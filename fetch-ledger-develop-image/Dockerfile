@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+RUN apt-get update
+
 USER root
 
 RUN apt-get update && \
@@ -30,6 +32,7 @@ RUN HOME=/home/default && \
 
 ENV CC=/usr/bin/clang
 ENV CXX=/usr/bin/clang++
+ENV CCACHE_DIR=/build/docker_ccache
 
 RUN apt-get install -y vim && \
     apt-get install -y make && \
