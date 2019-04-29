@@ -56,6 +56,11 @@ RUN apt-get install -y libboost-all-dev=1.65.1.0ubuntu1 && \
     apt-get install -y libpng-dev && \
     apt-get install -y zlib1g-dev
 
+# Required for integration tests
+RUN git clone git@github.com:uvue-git/fetch-cluster.git && cd fetch-cluster && python3 setup.py develop
+RUN pip3 install -U fetchai-ledger-api
+RUN pip3 install yaml
+
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib:/usr/lib
 
 USER default
