@@ -57,7 +57,9 @@ RUN apt-get install -y libboost-all-dev=1.65.1.0ubuntu1 && \
     apt-get install -y zlib1g-dev
 
 # Required for integration tests
-RUN apt-get install -y python3-pip
+RUN apt-get install -y python3-pip && \
+         pip3 install PyYAML && \
+         pip3 install -U fetchai-ledger-api
 
 RUN pip3 install -U PyYAML fetchai-ledger-api
 
