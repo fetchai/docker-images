@@ -57,6 +57,11 @@ RUN OPENSSL_SRC_DIR="/home/default/openssl" && \
     cd "${ORIG_DIR}" && \
     rm -rf "${OPENSSL_SRC_DIR}"
 
+# Required for integration tests
+RUN apt-get install -y python3-pip && \
+         pip3 install PyYAML && \
+         pip3 install -U fetchai-ledger-api
+
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib:/usr/lib
 
 USER default
