@@ -62,6 +62,8 @@ RUN pip3 install PyYAML && \
     pip3 install -U fetchai-ledger-api && \
     pip3 install -i https://test.pypi.org/simple/ fetchai-netutils==0.0.1
 
+RUN pip3 install autopep8 cmake_format
+
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib:/usr/lib
 
 USER default
