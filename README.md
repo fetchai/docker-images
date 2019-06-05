@@ -10,16 +10,16 @@ Usage (quick guide)<a name="guick_usage_guide"></a>
 
 1. We first need to build our `develop` docker image locally on our host OS:
     ```bash
-    ./develop-image/scripts/docker-build-img.sh
+    ./fetch-ledger-develop-image/scripts/docker-build-img.sh
     ```
 1. Start `bash` shell in docker container based on our `devlop` image:
     ```bash
-    ./develop-image/scripts/docker-run.sh bash
+    ./fetch-ledger-develop-image/scripts/docker-run.sh bash
     ```
 
 1. Run `make` helper:
     ```bash
-    ./develop-image/scripts/docker-make.sh [NON-MANDATORY_PARAMS_FOR_MAKE]
+    ./fetch-ledger-develop-image/scripts/docker-make.sh [NON-MANDATORY_PARAMS_FOR_MAKE]
     ```
 
 Concept
