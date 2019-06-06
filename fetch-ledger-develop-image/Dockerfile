@@ -8,7 +8,7 @@ RUN apt-get update && \
        g++ \
        gdb \
        clang-tidy \
-       clang-format \
+       clang-format-6.0 \
        cmake-curses-gui \
        llvm \
        sudo \
@@ -61,7 +61,7 @@ RUN OPENSSL_SRC_DIR="/home/default/openssl" && \
 RUN pip3 install PyYAML && \
     pip3 install -U fetchai-ledger-api && \
     pip3 install -i https://test.pypi.org/simple/ fetchai-netutils==0.0.1 && \
-    pip3 install autopep8 cmake_format
+    pip3 install autopep8==1.4.4 cmake_format==0.5.1
 
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib:/usr/lib
 
