@@ -8,7 +8,7 @@ RUN apt-get update && \
        g++ \
        gdb \
        clang-tidy \
-       clang-format \
+       clang-format-6.0 \
        cmake-curses-gui \
        llvm \
        sudo \
