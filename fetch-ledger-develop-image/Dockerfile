@@ -63,12 +63,8 @@ RUN OPENSSL_SRC_DIR="/home/default/openssl" &&                               \
     cd "${ORIG_DIR}" &&                                                      \
     rm -rf "${OPENSSL_SRC_DIR}"
 
-# Required for integration tests/style checks
-RUN pip3 install PyYAML &&                                                   \
-    pip3 install -U fetchai-ledger-api &&                                    \
-    pip3 install -i https://test.pypi.org/simple/                            \
-        fetchai-netutils==0.0.1 &&                                           \
-    pip3 install autopep8==1.4.4 cmake_format==0.5.1
+# Required for style checks
+RUN pip3 install autopep8==1.4.4 cmake_format==0.5.1
 
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib:/usr/lib
 
