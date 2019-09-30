@@ -25,7 +25,8 @@ RUN apt-get update &&                                                        \
        wget                                                                  \
        zlib1g-dev                                                            \
        python3-dev                                                           \
-       python3-pip
+       python3-pip                                                           \
+       libdw-dev
 
 # This adds the 'default' user to sudoers with full privileges:
 RUN HOME=/home/default &&                                                    \
