@@ -23,6 +23,8 @@ RUN apt-get update &&                                                        \
        less                                                                  \
        curl                                                                  \
        wget                                                                  \
+       protobuf-compiler                                                     \
+       libprotobuf-dev                                                       \
        zlib1g-dev                                                            \
        python3-dev                                                           \
        python3-pip                                                           \
