@@ -68,7 +68,7 @@ RUN OPENSSL_SRC_DIR="/home/default/openssl" && \
 
 RUN pip3 install pipenv
 
-ENV ENV LC_ALL=C.UTF-8 \
+ENV LC_ALL=C.UTF-8 \
     LANG=C.UTF-8 \
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib:/usr/lib
 
